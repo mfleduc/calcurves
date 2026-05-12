@@ -2,12 +2,13 @@
 ## Let's use those functions that we have. Should clean out probably the first 100
 ## observations at least to keep the filter converged
 ## Then we can go from there
+set.seed(68489)
 if(TRUE){
   ptest = c(0.05,0.25,0.5,0.75,0.95)
   ##
   k = 4; g = 0.3; m = 1
-  epsvals = seq(0,2,by=0.2)
-  ntrials = 100
+  epsvals = seq(0,1,by=0.1)
+  ntrials = 10
   dt = 0.01
   nsteps = 500
   system_noise_var = 0.0001 #Q
@@ -32,20 +33,20 @@ if(TRUE){
                                  k=k,g=g,m=m,R=obs_err_cov,dt=dt)
       preds[ee,ii,] = kalman_est$pred[1,]
       predstds[ee,ii,] = sqrt(kalman_est$predcov[1,1,])
-      if(ii==1){
-        plot((1:nsteps)*dt-dt, ground_truth[ee,ii,1,], col="black", type="l", lty=2,
-             xlab="Time", ylab="Position",main=paste("Kalman filtered and true states, eps=",epsvals[ee]))
-        lines((1:nsteps)*dt-dt,kalman_est$pred[1,],col="red")
-        lines((1:nsteps)*dt-dt,kalman_est$pred[1,]+1.96*predstds[ee,ii,],col="red", lty=2)
-        lines((1:nsteps)*dt-dt,kalman_est$pred[1,]-1.96*predstds[ee,ii,],col="red", lty=2)
-      }
+      # if(ii==1){
+      #   plot((1:nsteps)*dt-dt, ground_truth[ee,ii,1,], col="black", type="l", lty=2,
+      #        xlab="Time", ylab="Position",main=paste("Kalman filtered and true states, eps=",epsvals[ee]))
+      #   lines((1:nsteps)*dt-dt,kalman_est$pred[1,],col="red")
+      #   lines((1:nsteps)*dt-dt,kalman_est$pred[1,]+1.96*predstds[ee,ii,],col="red", lty=2)
+      #   lines((1:nsteps)*dt-dt,kalman_est$pred[1,]-1.96*predstds[ee,ii,],col="red", lty=2)
+      # }
     }
   }
 }
 ## Now proceed
 
 # reliability_plot(epsvals, ground_truth[,,1,], preds, predstds, ptest)
-eval_ndcs = seq(nburn,500,by=20)
+eval_ndcs = seq(nburn,nsteps,by=20)
 cvgs = rel_plot_spring(epsvals, ground_truth[,,1,eval_ndcs],
                         preds[,,eval_ndcs],
                         predstds[,,eval_ndcs], ptest)

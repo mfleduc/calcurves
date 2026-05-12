@@ -55,8 +55,8 @@ sim_spring = function(nsteps = 100, dt=0.01,
 #'@param truth 2\times nsteps array containing the mass position along the first row and velocity along the second. 
 #'@param p0 2\times 2 matrix. The initial guess for the covariance matrix of the predictions. Default is \eqn{P0=[[0.01,0];[0,0.01]]}.
 #'@param Q A covariance matrix for the perturbations applied to the spring-mass system. Default is the degenerate covariance matrix
-#'[[0,0];[0,0.001^2]] corresponding to no perturbations to position and Gaussian perturbations to velocity with mean 0 and sstandard deviation 0.001.
-#'@param R 2\times 2 observation error covariance. Default [[0.001,0];[0,0.001]]. This represents the observation errors through which the true state is 
+#'\eqn{Q=[[0,0];[0,0.001^2]]} corresponding to no perturbations to position and Gaussian perturbations to velocity with mean 0 and sstandard deviation 0.001.
+#'@param R \eqn{2\times 2} observation error covariance. Default is \eqn{R=[[0.001,0];[0,0.001]]}. This represents the observation errors through which the true state is 
 #'observed. If you wish to simulate a system where velocity is unobserved, set the second diagonal entry to a large value, i.e. 1e6. 
 #'@param k,m,g The spring stiffness, mass, and damping. Defaults are 2,1, 0.3 respectively.
 #'@param dt The time step. Default is 0.01.
@@ -107,10 +107,10 @@ for(ii in 2:dim(data)[2]){
 return(list(filt =filtered,pred=predicted,predcov=Pkkn1,postcov=Pkk, truth = data ))
 }
 #### Reliability plot building function
-#'@title Reliability plot estimation
-#'@description Estimates coverage rates and generates reliability plots for the 
+#'@title Empirical coverage rate estimation for the spring problem
+#'@description Estimates coverage rates for the 
 #'probabilistic model based on inputs. Currently under development, so just returns the 
-#'empirical coverages
+#'empirical coverages. Assumes a Gaussian predictive distribution.
 #'@param epsvals The spring nonlinearity parameters
 #'@param ground_truth The true state (position OR velocity)
 #'@param preds A time series of predicted positions OR velocities
@@ -118,14 +118,13 @@ return(list(filt =filtered,pred=predicted,predcov=Pkkn1,postcov=Pkk, truth = dat
 #'@param ptest A vector of the nominal coverage levels.
 #'@returns Empirical coverage estimates
 #'@export 
-rel_plot_spring = function(epsvals, ground_truth, preds, predstds, ptest ){
+emp_cvg_spring = function(epsvals, ground_truth, preds, predstds, ptest ){
   ####
-  #Want to biuld a data frame that covers everything.
   #Note: This is just the plot for one of the variables, position and
   #velocity should be done separately
   ####
   #Results should be 2 x ptest x epsvals
-  cols <- hcl.colors(length(epsvals), palette = "viridis")
+  # cols <- hcl.colors(length(epsvals), palette = "viridis")
   ntrials=dim(preds)[2]
   # cvg_res = array(0, dim=c(3,length(ptest), length(epsvals)))
   # Prior: DIR(1,...,1)
