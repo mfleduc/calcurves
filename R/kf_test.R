@@ -41,7 +41,7 @@ sim_spring = function(nsteps = 100, dt=0.01,
     k3 = c(x2p[2],-g*x2p[2]-k*x2p[1]-epsilon*x2p[1]^3 )
     x3 = x0+h*k3
     k4 = c( x3[2], -g*x3[2]-k*x3[1]-epsilon*x3[1]^3 )
-    state_vector[,ii] = state_vector[,ii-1] + h*(a*k1+b*k2+c*k3+d*k4) +c(0,sqrt(sigma_w))*rnorm(1)
+    state_vector[,ii] = state_vector[,ii-1] + h*(a*k1+b*k2+c*k3+d*k4) +c(0,(sigma_w))*rnorm(1)
     x0 = state_vector[,ii]
   }
   return(state_vector)
