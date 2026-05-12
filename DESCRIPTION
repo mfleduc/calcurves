@@ -1,0 +1,13 @@
+Package: calcurves
+Title: Calculation and Hypothesis Testing For Probabilistic Model Calibration
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matthew", "Leduc", "matthew.leduc@colorado.edu", role = "cre",
+           comment = c(ORCID = "0009-0006-5892-8823"))
+Description: This is an R package for the calculation of model calibration or reliability curves along with hypothesis testing for calibraiton both in a Bayesian and frequentist paradigm. Work is ongoing. 
+License: `use_gpl3_license()`
+Encoding: UTF-8
+Imports: 
+  pracma
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

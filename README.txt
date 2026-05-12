@@ -1,0 +1,1 @@
+This repository contains R code for probabilistic estimation and hypothesis testing for calibration of probabilistic models. It also contains example run scripts that show how the code works on two examples: Kalman filtering for a nonlinear spring and linear regression under a misspecified error distribution. Work is ongoing. 
