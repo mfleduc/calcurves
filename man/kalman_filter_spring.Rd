@@ -19,9 +19,9 @@ kalman_filter_spring(
 \item{truth}{2\times nsteps array containing the mass position along the first row and velocity along the second.}
 
 \item{Q}{A covariance matrix for the perturbations applied to the spring-mass system. Default is the degenerate covariance matrix
-[\link{0,0};\link{0,0.001^2}] corresponding to no perturbations to position and Gaussian perturbations to velocity with mean 0 and sstandard deviation 0.001.}
+\eqn{Q=[[0,0];[0,0.001^2]]} corresponding to no perturbations to position and Gaussian perturbations to velocity with mean 0 and sstandard deviation 0.001.}
 
-\item{R}{2\times 2 observation error covariance. Default [\link{0.001,0};\link{0,0.001}]. This represents the observation errors through which the true state is
+\item{R}{\eqn{2\times 2} observation error covariance. Default is \eqn{R=[[0.001,0];[0,0.001]]}. This represents the observation errors through which the true state is
 observed. If you wish to simulate a system where velocity is unobserved, set the second diagonal entry to a large value, i.e. 1e6.}
 
 \item{k, m, g}{The spring stiffness, mass, and damping. Defaults are 2,1, 0.3 respectively.}
